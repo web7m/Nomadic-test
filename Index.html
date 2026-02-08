@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomadic — Specialty Coffee Roasters</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F1E8;
+            --dark-brown: #2C1810;
+            --warm-brown: #6B4423;
+            --accent-gold: #C9A66B;
+            --soft-gray: #8B8680;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', 'Georgia', serif;
+            background-color: var(--cream);
+            color: var(--dark-brown);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Logo Splash Screen */
+        .logo-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease 2.5s forwards;
+        }
+
+        .logo-splash-content {
+            text-align: center;
+            animation: logoZoom 2s ease;
+        }
+
+        .logo-splash-content img {
+            max-width: 500px;
+            width: 85%;
+            margin-bottom: 0;
+        }
+
+        @keyframes logoZoom {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.02);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(245, 241, 232, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(44, 24, 16, 0.1);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--dark-brown);
+            text-transform: uppercase;
+        }
+
+        .logo-subtitle {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.5rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            display: block;
+            margin-top: -5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--dark-brown);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 8rem 5% 6rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--cream) 0%, rgba(201, 166, 107, 0.08) 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--warm-brown);
+            letter-spacing: 0.5px;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 6rem 5%;
+            background: var(--dark-brown);
+            color: var(--cream);
+        }
+
+        .philosophy .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .philosophy h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .philosophy p {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 6rem 5%;
+            background: var(--cream);
+        }
+
+        .menu .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--warm-brown);
+            margin-bottom: 4rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .menu-category {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 2px;
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .menu-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(44, 24, 16, 0.12);
+        }
+
+        .menu-category h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-brown);
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(44, 24, 16, 0.08);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 1.05rem;
+        }
+
+        .menu-note {
+            background: rgba(201, 166, 107, 0.1);
+            padding: 1.5rem;
+            border-radius: 2px;
+            border-left: 3px solid var(--accent-gold);
+            margin-top: 2rem;
+            font-style: italic;
+            color: var(--warm-brown);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 5%;
+            background: linear-gradient(180deg, rgba(201, 166, 107, 0.05) 0%, var(--cream) 100%);
+        }
+
+        .products .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 2px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .product-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card p {
+            color: var(--warm-brown);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        /* Brewing Guides */
+        .brewing-guides {
+            padding: 6rem 5%;
+            background: var(--dark-brown);
+            color: var(--cream);
+        }
+
+        .brewing-guides .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brewing-guides .section-title {
+            color: var(--cream);
+        }
+
+        .brewing-guides .section-subtitle {
+            color: var(--accent-gold);
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .guide-card {
+            background: rgba(245, 241, 232, 0.05);
+            padding: 2rem;
+            border-radius: 2px;
+            border: 1px solid rgba(245, 241, 232, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .guide-card:hover {
+            background: rgba(245, 241, 232, 0.08);
+        }
+
+        .guide-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+            letter-spacing: 0.5px;
+        }
+
+        .guide-card p {
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        /* Locations */
+        .locations {
+            padding: 6rem 5%;
+            background: var(--cream);
+        }
+
+        .locations .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .location-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 2px;
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.08);
+        }
+
+        .location-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-brown);
+            letter-spacing: 0.5px;
+        }
+
+        .location-card p {
+            margin-bottom: 0.8rem;
+            color: var(--warm-brown);
+            font-size: 1.05rem;
+        }
+
+        .location-card strong {
+            color: var(--dark-brown);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-brown);
+            color: var(--cream);
+            padding: 4rem 5% 2rem;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .footer-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            display: block;
+            margin-top: -10px;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .newsletter {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(245, 241, 232, 0.05);
+            border-radius: 2px;
+        }
+
+        .newsletter h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 1.5rem auto 0;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid rgba(245, 241, 232, 0.2);
+            background: rgba(245, 241, 232, 0.05);
+            color: var(--cream);
+            font-family: 'Libre Baskerville', serif;
+            border-radius: 2px;
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            background: var(--accent-gold);
+            color: var(--dark-brown);
+            border: none;
+            cursor: pointer;
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--cream);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(245, 241, 232, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(245, 241, 232, 0.98);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                gap: 2rem;
+                transition: left 0.3s ease;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .philosophy h2 {
+                font-size: 2rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.45rem;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Splash Screen -->
+    <div class="logo-splash">
+        <div class="logo-splash-content">
+            <img src="IMG_1997.png" alt="Nomadic Specialty Coffee Roasters">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                NOMADIC
+                <span class="logo-subtitle">SPECIALTY COFFEE ROASTERS</span>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#story">Our Story</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#shop">The Shop</a></li>
+                <li><a href="#brewing">Brewing Guides</a></li>
+                <li><a href="#locations">Find Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="story">
+        <h1>The Art of the Slow Pour</h1>
+        <p>Where every cup tells a story, and every bean begins a journey.</p>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy">
+        <div class="container">
+            <h2>Craft. Quality. Community.</h2>
+            <p>
+                At Nomadic, we believe coffee is more than a morning ritual—it's an experience. From sourcing single-origin beans to the precision of our slow pour, we honor the craft at every step.
+            </p>
+            <p>
+                Our roasters bring you the world's finest beans, carefully selected and roasted to perfection. We're not just serving coffee; we're creating moments of connection, one cup at a time.
+            </p>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <h2 class="section-title">Menu</h2>
+            <p class="section-subtitle">Crafted with passion, served with precision</p>
+
+            <div class="menu-grid">
+                <!-- Espresso Bar -->
+                <div class="menu-category">
+                    <h3>Espresso Bar</h3>
+                    <div class="menu-item">
+                        <span class="item-name">Espresso</span>
+                        <span class="item-price">45 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Double Espresso</span>
+                        <span class="item-price">65 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Americano</span>
+                        <span class="item-price">55 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Flat White</span>
+                        <span class="item-price">70 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cappuccino</span>
+                        <span class="item-price">65 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Latte</span>
+                        <span class="item-price">70 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cortado</span>
+                        <span class="item-price">60 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Macchiato</span>
+                        <span class="item-price">55 EGP</span>
+                    </div>
+                </div>
+
+                <!-- Filter & Specialty Brews -->
+                <div class="menu-category">
+                    <h3>Filter & Specialty Brews</h3>
+                    <div class="menu-item">
+                        <span class="item-name">V60 Pour Over</span>
+                        <span class="item-price">85 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Chemex</span>
+                        <span class="item-price">90 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">AeroPress</span>
+                        <span class="item-price">80 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">French Press</span>
+                        <span class="item-price">75 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cold Brew</span>
+                        <span class="item-price">75 EGP</span>
+                    </div>
+                </div>
+
+                <!-- Nomadic Signatures -->
+                <div class="menu-category">
+                    <h3>Nomadic Signatures</h3>
+                    <div class="menu-item">
+                        <span class="item-name">Nomadic Mocha</span>
+                        <span class="item-price">80 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cardamom Latte</span>
+                        <span class="item-price">75 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Honey Cinnamon Cortado</span>
+                        <span class="item-price">70 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Iced Vanilla Latte</span>
+                        <span class="item-price">75 EGP</span>
+                    </div>
+                </div>
+
+                <!-- Beyond Coffee -->
+                <div class="menu-category">
+                    <h3>Beyond Coffee</h3>
+                    <div class="menu-item">
+                        <span class="item-name">Matcha Latte</span>
+                        <span class="item-price">70 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Chai Latte</span>
+                        <span class="item-price">65 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Hot Chocolate</span>
+                        <span class="item-price">65 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fresh Mint Tea</span>
+                        <span class="item-price">45 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fresh Juice</span>
+                        <span class="item-price">55 EGP</span>
+                    </div>
+                </div>
+
+                <!-- Light Bites -->
+                <div class="menu-category">
+                    <h3>Light Bites</h3>
+                    <div class="menu-item">
+                        <span class="item-name">Croissant</span>
+                        <span class="item-price">45 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Almond Croissant</span>
+                        <span class="item-price">55 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Avocado Toast</span>
+                        <span class="item-price">85 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Grilled Cheese</span>
+                        <span class="item-price">75 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Granola Bowl</span>
+                        <span class="item-price">80 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Brownies</span>
+                        <span class="item-price">50 EGP</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Carrot Cake</span>
+                        <span class="item-price">60 EGP</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-note">
+                All espresso drinks available iced • Plant-based milk options available (+10 EGP)
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="shop">
+        <div class="container">
+            <h2 class="section-title">The Shop</h2>
+            <p class="section-subtitle">Take home the experience</p>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3>Signature House Blend</h3>
+                    <p>A carefully crafted blend of beans from Ethiopia and Colombia, offering notes of dark chocolate, caramel, and a hint of berries. Perfect for both espresso and filter brewing.</p>
+                </div>
+                <div class="product-card">
+                    <h3>Single Origin Collection</h3>
+                    <p>Explore our rotating selection of single-origin beans from renowned coffee regions worldwide. Each batch tells its own unique story through distinct flavor profiles.</p>
+                </div>
+                <div class="product-card">
+                    <h3>Brewing Equipment</h3>
+                    <p>From V60 drippers to precision grinders, find everything you need to recreate the Nomadic experience at home. We stock only the finest brewing tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brewing Guides -->
+    <section class="brewing-guides" id="brewing">
+        <div class="container">
+            <h2 class="section-title">Brewing Guides</h2>
+            <p class="section-subtitle">Master the craft at home</p>
+
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <h4>V60 Pour Over</h4>
+                    <p>The classic pour-over method that highlights the subtle notes of single-origin beans. Requires patience, precision, and a steady hand for the perfect extraction.</p>
+                </div>
+                <div class="guide-card">
+                    <h4>AeroPress</h4>
+                    <p>A versatile brewing method that produces clean, full-bodied coffee in under two minutes. Perfect for experimenting with different brewing ratios and techniques.</p>
+                </div>
+                <div class="guide-card">
+                    <h4>French Press</h4>
+                    <p>The immersion method that creates a rich, full-bodied cup with deep flavors. Ideal for those who prefer a bolder coffee experience with more oils and sediment.</p>
+                </div>
+                <div class="guide-card">
+                    <h4>Cold Brew</h4>
+                    <p>Slow-steeped for 12-18 hours to create a smooth, low-acid concentrate. Perfect for hot summer days or as a base for creative coffee cocktails.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section class="locations" id="locations">
+        <div class="container">
+            <h2 class="section-title">Find Us</h2>
+            <p class="section-subtitle">Visit our Cairo locations</p>
+
+            <div class="location-grid">
+                <div class="location-card">
+                    <h3>Zamalek</h3>
+                    <p><strong>Address:</strong> 17 Ahmed Heshmat St., Zamalek, Cairo</p>
+                    <p><strong>Hours:</strong> Daily, 7:30 AM – 1:00 AM</p>
+                    <p><strong>Phone:</strong> +20 XXX XXX XXXX</p>
+                </div>
+                <div class="location-card">
+                    <h3>Heliopolis (Korba)</h3>
+                    <p><strong>Address:</strong> 7 El Thawra St., Korba, Heliopolis, Cairo</p>
+                    <p><strong>Hours:</strong> Daily, 7:30 AM – 1:00 AM</p>
+                    <p><strong>Phone:</strong> +20 XXX XXX XXXX</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                NOMADIC
+                <span class="footer-subtitle">SPECIALTY COFFEE ROASTERS</span>
+            </div>
+
+            <div class="social-links">
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+            </div>
+
+            <div class="newsletter">
+                <h4>Join Our Coffee Journey</h4>
+                <p>Subscribe to receive updates on new roasts, brewing tips, and exclusive offers</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Nomadic Specialty Coffee Roasters. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
